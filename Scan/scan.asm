@@ -1,0 +1,54 @@
+	[org 0x7C00]
+	xor ax, ax
+	mov ds, ax
+
+	mov si, mesaj
+	call main
+
+dongu:
+	jmp dongu
+
+main:
+	lodsb
+	or al, al
+	jz scan
+	mov ah, 0Eh
+	int 10h
+	jmp main
+
+scan:
+	mov ah, 00h
+	int 16h
+	cmp al, 31h
+	je hello
+	cmp al, 32h
+	je merhaba
+	jmp scan
+
+merhaba:
+	mov si, mrb
+	call print
+	jmp dongu
+
+hello:
+	mov si, hell
+	call print
+	jmp dongu
+
+print:
+	lodsb
+	or al, al
+	jz bitir
+	mov ah, 0x0E
+	int 0x10
+	jmp print
+
+	bitir:
+	   ret
+
+	mesaj db "1-) Hello World!", 10, 13, "2-) Merhaba Dunya!", 10, 13, "    Seciminiz : ", 13, 10, 0
+	hell db  "Hello World!", 13, 10, 0
+	mrb db "Merhaba Dunya!", 13, 10, 0
+
+	times 510 - ($ - $$) db 0x00
+	db 0x55, 0xAA
