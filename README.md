@@ -1,1 +1,1 @@
-Ömer Faruk TAŞKIN
+Bilgisayar Mühendisliği Uygulama Projesi
